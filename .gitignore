@@ -1,0 +1,16 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+.cdsapirc
+*.env
+.DS_Store
+.vscode/settings.json
+*.pt
+*.pth
+*.ckpt
+checkpoints/
