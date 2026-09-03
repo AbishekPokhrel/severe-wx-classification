@@ -1,0 +1,38 @@
+# Scope config for the hazard-aware severe weather classification project.
+# These values lock the decisions made in the proposal so the pipeline
+# behaves consistently across every script.
+
+data:
+  # Recommend starting narrower than the original paper's full 1996-2019
+  # range to keep ERA5 pulls tractable in one semester. Widen later if
+  # time allows.
+  start_year: 2010
+  end_year: 2023
+
+  # East of the Continental Divide, matching the original paper's domain.
+  # (lon_min, lon_max, lat_min, lat_max) in degrees, lon in -180..180.
+  region_bbox: [-105.0, -67.0, 24.0, 49.0]
+
+  spc_tornado_csv: "data/raw/1950-2024_actual_tornadoes.csv"
+  spc_hail_csv: "data/raw/1955-2024_hail.csv"
+
+labels:
+  tornado:
+    # EF/F-scale rating thresholds. -9 = unknown rating, always dropped.
+    severe_min_mag: 0      # (E)F0
+    significant_min_mag: 2 # (E)F2+
+  hail:
+    # Hail size in inches (SPC's native unit for the `mag` column).
+    severe_min_in: 1.0        # 25.4 mm
+    significant_min_in: 2.0   # 50.8 mm
+
+qc:
+  # Profile must be pulled from this many hours before the report's
+  # floored hour (matches the original paper's proximity definition).
+  proximity_lag_hours: 1
+  # Minimum RH contamination threshold (paper used 90% in 0-6km layer).
+  max_low_level_rh_pct: 90
+
+# Guaranteed core deliverable hazard (larger sample size = more stable
+# first result). The stretch-goal multi-task extension adds "tornado".
+primary_hazard: hail

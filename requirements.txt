@@ -1,0 +1,7 @@
+pandas>=2.0
+pyyaml>=6.0
+pyarrow>=14.0
+xarray>=2023.1
+netCDF4>=1.6
+metpy>=1.5
+cdsapi>=0.6
